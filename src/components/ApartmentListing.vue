@@ -1,16 +1,13 @@
 <template>
   <div class="apartment-listing">
-    <!-- Hero Section with Image Gallery -->
-    <section class="h-[80vh]">
-      <div class="flex flex-col md:flex-row h-full rounded-b-3xl overflow-hidden">
-        <div class="flex basis-1/2 flex-wrap gap-2 p-2 hidden md:flex">
-          <div v-for="(image, index) in images" :key="index" @click="setMainImage(image)" class="flex">
-            <img :src="image" :alt="'Apartment view ' + (index + 1)" class="object-cover h-full w-full" />
-          </div>
-        </div>
-      </div>
-    </section>
-
+    <b-carousel-list
+      v-model="currentImageIndex"
+      class="h-[60vh]"
+      :data="images">
+      <template #item="list">
+        <b-image :src="list.list"></b-image>
+      </template>
+    </b-carousel-list>
     <!-- Image Modal -->
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" @click="showModal = false">
       <div class="relative max-w-7xl max-h-[90vh] p-4" @click.stop>
@@ -217,6 +214,8 @@ const images = ref([
   living6,
 ])
 
+const currentImageIndex = ref(1)
+
 const property = ref({
   title: 'Gezellig appartement op toplocatie in Gent',
   price: 295000,
@@ -293,13 +292,7 @@ const property = ref({
   }]
 })
 
-// Convert methods to functions
-const setMainImage = (image) => {
-  mainImage.value = image
-}
-
 // Add these functions before onMounted
-const currentImageIndex = ref(0)
 
 const nextImage = () => {
   currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length
