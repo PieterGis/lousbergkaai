@@ -145,11 +145,11 @@
 
     <!-- Schedule Viewing -->
     <section class="bg-gray-100 text-gray-500 pt-8">
-      <div class="mx-auto px-4 text-center">
-        <h2 class="text-3xl font-semibold">Plan een bezoek in</h2>
-        <div class="calendly-container h-[700px]">
-          <div class="calendly-inline-widget h-full" :data-url="property.calendlyUrl"></div>
-        </div>
+      <div class="mx-auto px-4 text-center p-5">
+        <h2 class="text-3xl font-semibold mb-3">Plan een bezoek in</h2>
+        <p class="text-gray-700">Bezoekdagen zijn gepland op 14 en 15 juni.</p>
+        Contacteer ons via <a href="mailto:gistelinckpieter@gmail.com" class="text-primary">gistelinckpieter@gmail.com</a> of 
+        <a href="tel:0487638688" class="text-primary">0487638688</a>
       </div>
     </section>
 
