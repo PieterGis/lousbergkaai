@@ -1,5 +1,5 @@
 <template>
-    <div id="map" class="map rounded-3xl"></div>
+    <div id="map" class="map rounded-3xl shadow-lg "></div>
   </template>
   
   <script setup>
@@ -12,6 +12,13 @@
     const map = new window.google.maps.Map(document.getElementById('map'), {
       center: locatie,
       zoom: 15,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      zoomControl: false,
+      gestureHandling: 'greedy',
+      disableDoubleClickZoom: true,
+      disableScrollWheelZoom: true,
       styles:[
     {
         "featureType": "water",
@@ -214,7 +221,7 @@
   <style scoped>
   .map {
     width: 100%;
-    height: 600px;
+    height: 400px;
   }
   </style>
 

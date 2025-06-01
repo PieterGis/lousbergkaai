@@ -3,45 +3,24 @@
     <b-carousel-list
       v-model="currentImageIndex"
       class="h-[60vh]"
+      :arrow="true"
+      :arrow-hover="true"
+      :items-to-show="4"
+      :items-to-list="1"
+      :repeat="true"
+      :has-drag="false"
+      :has-grayscale="false"
+      :has-opacity="false"
       :data="images">
       <template #item="list">
-        <b-image :src="list.list"></b-image>
+        <b-image :src="list.list" class="cursor-pointer"></b-image>
       </template>
     </b-carousel-list>
-    <!-- Image Modal -->
-    <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75" @click="showModal = false">
-      <div class="relative max-w-7xl max-h-[90vh] p-4" @click.stop>
-        <img 
-          :src="mainImage" 
-          alt="Main apartment view" 
-          class="max-h-[85vh] w-auto object-contain"
-        />
-        <!-- Navigation buttons -->
-        <button 
-          class="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
-          @click.stop="previousImage"
-        >
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button 
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
-          @click.stop="nextImage"
-        >
-          <i class="fas fa-chevron-right"></i>
-        </button>
-        <button 
-          class="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75"
-          @click="showModal = false"
-        >
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-    </div>
 
     <!-- Property Details -->
     <section class="property-details">
       <div class="container mx-auto px-4 py-8 flex flex-col items-center mt-5">
-        <div class="text-gray-700 font-medium">Te koop</div>
+        <div class="text-gray-700 font-medium text-xl">Te koop</div>
         <h1 class="text-4xl font-bold mb-4">{{ property.title }}</h1>
         <div class="price-tag text-3xl font-semibold text-primary mb-6">
           €{{ property.price.toLocaleString('nl-BE') }}
@@ -66,6 +45,10 @@
             <i class="fas fa-bath"></i>
             <span>{{ property.bathrooms }} badkamer</span>
           </div>
+          <div class="feature-item"> 
+            <i class="fas fa-ruler-combined"></i>
+            <span>Kelder met berging</span>
+          </div>
           <div class="feature-item">
             <i class="fas fa-ruler-combined"></i>
             <span>{{ property.area }} m²</span>
@@ -76,34 +59,34 @@
           </div>
           <div class="feature-item">
             <i class="fas fa-calendar-alt"></i>
-            <span>Beschikbaar vanaf {{ property.available_from }}</span>
+            <span>Beschikbaar vanaf akte</span>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Bergruimte voor wasmachine en droogkast</span>
+          </div>
+          <div class="feature-item">  
+            <i class="fas fa-parking"></i>
+            <span>Zonnepanelen op dak</span>
           </div>
         </div>
       </div>
     </section>
 
-    Beschrijving
-    Bergruimte met plaats voor wasmachine en droogkast.
-    Berging in de kelder.
-    
-    type verwarming: 
-    Zonnepanelen 
-    terras
-
-    <section class="py-8 flex justify-center items-center">  
+    <section class="py-8 flex justify-center items-center container">  
       <div class="mx-auto px-4 text-center">
         <h2 class="text-2xl font-semibold mb-6">Waarom dit appartement?</h2>
-        <div class="why-grid grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="(why, index) in property.why" :key="index" class="why-item">
+        <div class="grid grid-cols-2 gap-5">
+          <div v-for="(why, index) in property.why" :key="index" class="p-2 flex flex-col items-start justify-items-start">
             <h3 class="text-lg font-semibold">{{ why.title }}</h3>
-            <p class="text-gray-700">{{ why.description }}</p>
+            <p class="text-gray-700 flex flex-col text-left">{{ why.description }}</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Video Section -->
-    <section class="video-section bg-gray-50 py-8 p-10">
+    <!-- <section class="video-section bg-gray-50 py-8 p-10">
       <div class="container mx-auto px-4">
         <div class="video-container aspect-w-16 aspect-h-9 rounded-xl">
           <iframe
@@ -111,28 +94,29 @@
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
+            class="w-full h-full rounded-xl"
           ></iframe>
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <section class="flex gap-2 w-full p-10">
-      <div class="basis-1/3 p-4">
-        <h2 class="text-2xl font-semibold mb-4">Locatie</h2>
-        <p class="text-gray-700">Ferdinand Lousbergkaai 101/003, 9000 Gent</p>
+    <section class="flex flex-col items-center py-8 bg-gray-100">
+      <div class="text-center mb-4">
+        <h2 class="text-2xl font-semibold mb-2">Locatie</h2>
+        <p class="text-gray-700 text-lg">{{ property.location }}</p>
       </div>
-      <div class="basis-2/3">
+      <div class="w-full px-[20%]">
         <GoogleMaps/>
       </div>
     </section>
 
-    <section class="gallery-section py-8">
+    <section class="gallery-section py-8 container">
       <div class="mx-auto px-4 text-center">
-        <h2 class="text-2xl font-semibold mb-6">In de buurt</h2>
+        <h2 class="text-2xl font-semibold mb-4 mt-6">In de buurt</h2>
         <div class="gallery-grid grid grid-cols-2 md:grid-cols-4 gap-4">
           <div v-for="(surrounding, index) in property.surroundings" :key="index" class="gallery-item">
-            <img :src="surrounding.image" :alt="surrounding.title" />
-            <h3 class="text-lg font-semibold">{{ surrounding.title }}</h3>
+            <img :src="surrounding.image" :alt="surrounding.title" class="rounded-md h-[300px] w-full object-cover" />
+            <h3 class="text-lg font-semibold pt-4">{{ surrounding.title }}</h3>
             <p class="text-gray-700">{{ surrounding.description }}</p>
           </div>
         </div>
@@ -140,11 +124,11 @@
     </section>
  
 
-    <section class="why-section py-8 text-center">  
+    <section class="why-section py-10 container">  
       <div class="mx-auto px-4">
-        <h2 class="text-2xl font-semibold mb-6">Ideaal voor</h2>
-        <div class="why-grid grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="(why, index) in property.for_whom" :key="index" class="why-item">
+        <h2 class="text-2xl font-semibold mb-5 text-center">Ideaal voor</h2>
+        <div class="why-grid grid grid-cols-2 gap-5 md:px-20">
+          <div v-for="(why, index) in property.for_whom" :key="index" class="text-center p-2">
             <h3 class="text-lg font-semibold">{{ why.title }}</h3>
             <p class="text-gray-700">{{ why.description }}</p>
           </div>
@@ -194,37 +178,48 @@ import living3 from '@/assets/living3.jpeg'
 import living4 from '@/assets/living4.jpeg'
 import living5 from '@/assets/living5.jpeg'
 import living6 from '@/assets/living6.jpeg'
+import slaapkamer1 from '@/assets/slaapkamer1.jpeg'
+import badkamer1 from '@/assets/badkamer1.jpeg'
+import badkamer2 from '@/assets/badkamer2.jpeg'
+import buurtwinkel from '@/assets/buurtwinkel.jpeg'
+import gentbrugsemeersen from '@/assets/gentbrugsemeersen.png'
 
 // Convert data() to refs
 const mainImage = ref(living5)
 const images = ref([
+  living1,
   buiten1,
+  keuken2,
+  slaapkamer1,
+  living2,
   buiten2,
+  badkamer2,
   buiten3,
   buiten4,
   buiten5,
   keuken1,
-  keuken2,
+
   keuken3,
-  living1,
-  living2,
+  badkamer1,
   living3,
   living4,
   living5,
   living6,
 ])
 
-const currentImageIndex = ref(1)
+const currentImageIndex = ref(0)
 
 const property = ref({
   title: 'Gezellig appartement op toplocatie in Gent',
   price: 295000,
   bedrooms: 1,
   bathrooms: 1,
+  bergruimte: 1,
   area: 59,
-  location: 'Ferdinand Lousbergkaai 101/003, 9000 Gent',
+  location: 'Ferdinand Lousbergkaai 101 bus 003, 9000 Gent',
   description: 'Met veel plezier hebben wij hier als koppel gewoond. Een warm, licht en gezellig appartement waar we mooie herinneringen hebben opgebouwd. Nu er een baby op komst is, verhuizen we naar iets ruimer, en nemen we met pijn in het hart afscheid van deze plek. We hopen dat de volgende bewoners er net zo graag zullen wonen als wij. Kom gerust eens kijken — misschien wordt dit ook jouw nieuwe thuis.',
-  videoUrl: 'https://www.youtube.com/embed/your-video-id',
+  videoUrl: 'https://www.youtube.com/embed/lx3RndgFIG8',
+  epc: 289,
   mapUrl: 'https://www.google.com/maps/embed?pb=your-location-embed-code',
   calendlyUrl: 'https://calendly.com/gistelinckpieter/bezoek-appartement',
   available_from: '14 juli 2025',
@@ -236,7 +231,7 @@ const property = ref({
   why: [
     {
       title: 'Rustig gelegen',
-      description: 'Een warm, licht en gezellig appartement waar we mooie herinneringen hebben opgebouwd.'
+      description: 'Niet gelegen langs een straat, baan je jezelf in een oase van rust.'
     },
     {
     title: 'Dicht bij de natuur',
@@ -244,7 +239,7 @@ const property = ref({
   },
   { 
     title: 'Dicht bij de stad',
-    description: 'Werk of studeer in Gent? Dit appartement is de perfecte keuze.'  
+    description: 'In 10 minuten ben je al in het centrum.'  
   },
   {
     title: 'Snelle toegang tot autostrades en openbare vervoer',
@@ -262,7 +257,7 @@ const property = ref({
   {
     title: 'Gentbrugse Meersen',
     description: 'De Gentbrugse Meersen is een van de grootste parken in Gent. Het is een perfecte plek om te wandelen of te fietsen.',
-    image: '/images/surroundings/1.jpg',
+    image: gentbrugsemeersen,
   },
   {
     title: 'Koningin Astridpark',
@@ -272,23 +267,23 @@ const property = ref({
   {
     title: 'Buurtwinkel',
     description: 'De buurtwinkel is een van de grootste winkels in Gent. Het is een perfecte plek om te eten of te kopen.',
-    image: '/images/surroundings/1.jpg',
+    image: buurtwinkel,
   }],
   for_whom: [{
     title: 'Starters',
-    description: 'De jongeren zijn een van de grootste groepen in Gent. Het is een perfecte plek om te eten of te kopen.'
+    description: 'Begin zorgeloos aan jouw carrière.'
   },
   {
     title: 'Investeerders',
-    description: 'De familie is een van de grootste groepen in Gent. Het is een perfecte plek om te eten of te kopen.'
+    description: 'Ideaal om te verhuren.'
   },
   {
     title: 'Singles',
-    description: 'De singles zijn een van de grootste groepen in Gent. Het is een perfecte plek om te eten of te kopen.'
+    description: 'Geniet van jouw eigen stekje in Gent.'
   },
   {
     title: 'Koppels',
-    description: 'De koppel is een van de grootste groepen in Gent. Het is een perfecte plek om te eten of te kopen.'
+    description: 'Geniet van elkaar en de buurt.'
   }]
 })
 
