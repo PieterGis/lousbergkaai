@@ -1,18 +1,10 @@
 <template>
   <div class="apartment-listing">
     <!-- Hero Section with Image Gallery -->
-    <section class="hero-section">
+    <section class="h-[80vh]">
       <div class="flex flex-col md:flex-row h-full rounded-b-3xl overflow-hidden">
-        <div class="flex basis-2/3">
-          <img 
-            :src="mainImage" 
-            alt="Main apartment view" 
-            class="cursor-pointer object-cover h-full w-full" 
-            @click="showModal = true"
-          />
-        </div>
-        <div class="flex basis-1/3 flex-wrap gap-2 p-2">
-          <div v-for="(image, index) in images" :key="index" @click="setMainImage(image)" class="flex thumbnail">
+        <div class="flex basis-1/2 flex-wrap gap-2 p-2 hidden md:flex">
+          <div v-for="(image, index) in images" :key="index" @click="setMainImage(image)" class="flex">
             <img :src="image" :alt="'Apartment view ' + (index + 1)" class="object-cover h-full w-full" />
           </div>
         </div>
@@ -27,6 +19,19 @@
           alt="Main apartment view" 
           class="max-h-[85vh] w-auto object-contain"
         />
+        <!-- Navigation buttons -->
+        <button 
+          class="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
+          @click.stop="previousImage"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button 
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
+          @click.stop="nextImage"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
         <button 
           class="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2 hover:bg-opacity-75"
           @click="showModal = false"
@@ -69,12 +74,24 @@
             <span>{{ property.area }} m²</span>
           </div>
           <div class="feature-item">
+            <i class="fas fa-ruler-combined"></i>
+            <span>{{ property.epc }} kWh/m²</span>
+          </div>
+          <div class="feature-item">
             <i class="fas fa-calendar-alt"></i>
             <span>Beschikbaar vanaf {{ property.available_from }}</span>
           </div>
         </div>
       </div>
     </section>
+
+    Beschrijving
+    Bergruimte met plaats voor wasmachine en droogkast.
+    Berging in de kelder.
+    
+    type verwarming: 
+    Zonnepanelen 
+    terras
 
     <section class="py-8 flex justify-center items-center">  
       <div class="mx-auto px-4 text-center">
@@ -124,29 +141,11 @@
         </div>
       </div>
     </section>
-
-    <!-- Location Map -->
-    <!-- <section class="location-section py-8">
-      <div class="container mx-auto px-4">
-        <h2 class="text-2xl font-semibold mb-6">Location</h2>
-        <div class="map-container h-96 rounded-lg overflow-hidden">
-          <iframe
-            :src="property.mapUrl"
-            width="100%"
-            height="100%"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-          ></iframe>
-        </div>
-      </div>
-    </section> -->
-
  
 
     <section class="why-section py-8 text-center">  
       <div class="mx-auto px-4">
-        <h2 class="text-2xl font-semibold mb-6">Voor wie?</h2>
+        <h2 class="text-2xl font-semibold mb-6">Ideaal voor</h2>
         <div class="why-grid grid grid-cols-2 md:grid-cols-4 gap-4">
           <div v-for="(why, index) in property.for_whom" :key="index" class="why-item">
             <h3 class="text-lg font-semibold">{{ why.title }}</h3>
@@ -180,7 +179,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import GoogleMaps from './GoogleMaps.vue'
 import lousbergmarkt1 from '@/assets/lousbergmarkt1.jpeg'
 import koninginAstridpark from '@/assets/astrid1.jpeg'
@@ -199,11 +198,8 @@ import living4 from '@/assets/living4.jpeg'
 import living5 from '@/assets/living5.jpeg'
 import living6 from '@/assets/living6.jpeg'
 
-
-
-
 // Convert data() to refs
-const mainImage = ref(living1)
+const mainImage = ref(living5)
 const images = ref([
   buiten1,
   buiten2,
@@ -238,7 +234,12 @@ const property = ref({
     description: 'Parking ook te koop.',
     image: '/images/surroundings/1.jpg',
   },
-  why: [{
+  why: [
+    {
+      title: 'Rustig gelegen',
+      description: 'Een warm, licht en gezellig appartement waar we mooie herinneringen hebben opgebouwd.'
+    },
+    {
     title: 'Dicht bij de natuur',
     description: 'Het parkje achter het appartement is een perfecte plek om te genieten van de zon.',
   },
@@ -247,8 +248,8 @@ const property = ref({
     description: 'Werk of studeer in Gent? Dit appartement is de perfecte keuze.'  
   },
   {
-    title: 'Snelle toegang tot autostrades',
-    description: 'Moet je de baan op voor je werk? Dan is dit appartement de perfecte keuze.'
+    title: 'Snelle toegang tot autostrades en openbare vervoer',
+    description: 'Je bent snel de E17 of E40 op. Daarnaast liggen Dampoort station en Zuidstation binnen 10 minuten.'
   },
   {
     title: 'Sportgelegenheden',
@@ -275,7 +276,7 @@ const property = ref({
     image: '/images/surroundings/1.jpg',
   }],
   for_whom: [{
-    title: 'Studenten',
+    title: 'Starters',
     description: 'De jongeren zijn een van de grootste groepen in Gent. Het is een perfecte plek om te eten of te kopen.'
   },
   {
@@ -297,13 +298,47 @@ const setMainImage = (image) => {
   mainImage.value = image
 }
 
-// Convert mounted hook
+// Add these functions before onMounted
+const currentImageIndex = ref(0)
+
+const nextImage = () => {
+  currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length
+  mainImage.value = images.value[currentImageIndex.value]
+}
+
+const previousImage = () => {
+  currentImageIndex.value = (currentImageIndex.value - 1 + images.value.length) % images.value.length
+  mainImage.value = images.value[currentImageIndex.value]
+}
+
+// Add keyboard navigation
+const handleKeydown = (e) => {
+  if (!showModal.value) return
+  
+  if (e.key === 'ArrowRight') {
+    nextImage()
+  } else if (e.key === 'ArrowLeft') {
+    previousImage()
+  } else if (e.key === 'Escape') {
+    showModal.value = false
+  }
+}
+
+// Update the onMounted hook to include keyboard listener
 onMounted(() => {
   // Load Calendly script
   const script = document.createElement('script')
   script.src = 'https://assets.calendly.com/assets/external/widget.js'
   script.async = true
   document.head.appendChild(script)
+  
+  // Add keyboard event listener
+  window.addEventListener('keydown', handleKeydown)
+})
+
+// Add cleanup in onUnmounted
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 // Add modal state
@@ -313,12 +348,6 @@ const showModal = ref(false)
 <style scoped>
 .apartment-listing {
   font-family: 'Inter', sans-serif;
-}
-
-.hero-section {
-  position: relative;
-  height: 70vh;
-  overflow: hidden;
 }
 
 .main-image {
