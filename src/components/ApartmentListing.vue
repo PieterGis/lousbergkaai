@@ -1,5 +1,5 @@
 <template>
-  <div class="apartment-listing  bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+  <div class="bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
     <!-- Add ImageModal component -->
     <ImageModal 
       :is-open="isModalOpen" 
@@ -8,26 +8,29 @@
       @close="closeModal"
     />
 
-    <div class="grid grid-cols-4 gap-1">
-      <div v-for="(image, index) in images_header" :key="index" class="cursor-pointer h-[400px]" @click="openModal(image, 'Main Image')">
-        <img :src="image" alt="Main Image" class="w-full h-full object-cover">
+    <div class="grid grid-cols-4 gap-2 container pt-5 px-4">
+      <div v-for="(image, index) in images_header" :key="index" class="cursor-pointer h-[250px] md:h-[400px]" @click="openModal(image, 'Main Image')">
+        <img :src="image" alt="Main Image" class="w-full h-full object-cover rounded-2xl">
       </div> 
     </div>
 
     <!-- Property Details -->
-    <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-b-3xl p-2 md:p-12 mb-12 text-white shadow-2xl container mb-5">
-      <div class="container py-2 flex flex-col items-center mt-5 text-white">
-        <div class="text-white font-medium text-xl">Te koop</div>
-        <h1 class="text-4xl font-bold mb-4">{{ property.title }}</h1>
-        <div class="price-tag text-3xl font-semibold text-amber-200 mb-3">
+     <div class="container flex justify-center py-3 px-4">
+      <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-3xl p-2 md:p-12 mb-12 text-white shadow-2xl mb-5 w-full">
+      <div class="py-2 flex flex-col items-center mt-5 text-white">
+        <div class="text-white font-medium md:text-xl">Te koop</div>
+        <h1 class="text-lg md:text-4xl font-bold md:mb-4 text-center">{{ property.title }}</h1>
+        <div class="price-tag md:text-3xl font-semibold text-amber-200 mb-2 md:mb-3">
           €{{ property.price.toLocaleString('nl-BE') }}
     
         </div>
-        <div class="location-tag text-gray-700 mb-6 flex gap-2 items-center">
-          <p class="text-xl md:text-2xl text-orange-100 leading-relaxed">{{ property.location }}</p>
+        <div class="text-gray-700 mb-2 md:mb-6 flex gap-2 items-center">
+          <p class="md:text-2xl text-orange-100 leading-relaxed text-center mb-5">{{ property.location }}</p>
         </div>
       </div>
     </section>
+     </div>
+ 
 
     <section class="py-8 flex justify-center items-center container">  
       <div class="mx-auto px-4 w-full">
@@ -35,12 +38,12 @@
           <div v-for="(why, index) in property.story" :key="index" 
                class="flex flex-col md:flex-row items-center gap-8 mb-8">
             <div class="timeline-content flex flex-col md:flex-row items-center gap-8">
-              <div class="timeline-image w-full md:w-1/2 p-5 flex justify-center items-center">
+              <div class="w-full md:w-1/2 p-5 flex justify-center items-center">
                 <img :src="why.image" :alt="why.title" class="object-cover rounded-lg" :class="why.class">
               </div>
-              <div class="timeline-text w-full md:w-1/2 bg-white rounded-lg p-5 shadow-lg">
+              <div class="timeline-text w-full md:w-1/2 rounded-lg p-5 shadow-lg bg-white">
                 <i class="fas fa-hand-wave text-amber-400 text-2xl"></i>
-                <p class="text-gray-600 p-5 font-medium tracking-wide">{{ why.description }}</p>
+                <p class="flex items-center space-x-3 p-3 rounded-xl font-medium text-stone-800">{{ why.description }}</p>
               </div>
             </div>
           </div>
@@ -98,27 +101,28 @@
       </div>
     </section>
 
-    <div class="grid grid-cols-4 gap-1 mt-2">
+    <div class="grid grid-cols-4 gap-2 mt-2 container mx-auto px-4">
       <div v-for="(image, index) in images_other" :key="index" class="main-image cursor-pointer" @click="openModal(image, 'Main Image')">
-        <img :src="image" alt="Main Image" class="w-full h-[150px] md:h-[500px] object-cover">
+        <img :src="image" alt="Main Image" class="w-full h-[150px] md:h-[400px] object-cover rounded-2xl">
       </div>
     </div>
 
-    <section class="py-8 flex justify-center items-center container px-4">
-      <div class="mx-auto bg-white rounded-lg shadow-lg flex md:flex-row items-center hadow-lg hover:shadow-xl transition-all 
-        duration-300 transform hover:-translate-y-1">
-        <div class="flex flex-col items-start md:items-center px-5">
-          <h2 class="text-2xl font-semibold text-gray-600">Last but not least</h2>
-          <p class="font-medium mb-4 text-gray-600">Onze ondergrondse parking is ook te koop.</p>
+    <section class="py-10 container px-4 flex justify-center">
+      <div class="bg-white rounded-lg shadow-lg flex items-center shadow-lg hover:shadow-xl transition-all 
+        duration-300 transform hover:-translate-y-1 flex flex-col justify-center items-center overflow-hidden">
+        <div class="flex flex-col items-center p-5">
+          <h2 class="md:text-xl font-semibold text-gray-600">Last but not least</h2>
+          <p class="font-medium text-gray-600 text-center">Onze ondergrondse parking is ook te koop.</p>
         </div>
 
-        <img :src="parking1" alt="Parking" class="size-[150px] md:size-[30vh] object-cover rounded-md cursor-pointer" @click="openModal(parking1, 'Parking')" />
+        <img :src="parking1" alt="Parking" 
+        class="w-full h-[250px] md:h-[30vh] object-cover cursor-pointer" @click="openModal(parking1, 'Parking')" />
       </div>
     </section>
 
 
     <!-- Schedule Viewing -->
-    <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-t-3xl p-2 md:p-12 mb-12 text-white shadow-2xl container mt-4">
+    <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-t-3xl p-2 md:p-12 mb-12 text-white shadow-2xl container mt-4 p-5">
       <div class="mx-auto px-4 text-center p-5 text-white">
         <h2 class="text-3xl font-bold mb-3 text-white">Plan een bezoek in</h2>
         <p class="text-white font-medium">Bezoekdagen zijn gepland op 14 juni.</p>
@@ -204,7 +208,6 @@ const property = ref({
   story: [
     {
       description: 'Hallo, wij zijn Eveline en Pieter, en wij verkopen ons appartement. Met een baby op komst is het tijd om te verhuizen naar iets ruimer. We hebben hier als koppel veel plezier gehad en mooie herinneringen opgebouwd. We hopen dat de volgende bewoners er net zo graag zullen wonen als wij.',
-      image: koppel,
       class: 'w-[350px] h-[500px]'
     },
     {
@@ -258,7 +261,7 @@ const property = ref({
   },
   {
     title: 'Koppels',
-    description: 'Geniet van elkaar en de buurt.'
+    description: 'Geniet van elkaar en de buurt. ❤️ '
   }],
   features: [
     {
@@ -279,7 +282,7 @@ const property = ref({
     },
     {
       icon: 'fas fa-ruler-combined',
-      text: '289 kWh/m²',
+      text: '322 kWh/m²',
     },
     {
       icon: 'fas fa-calendar-alt',
