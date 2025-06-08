@@ -19,6 +19,8 @@
       gestureHandling: 'greedy',
       disableDoubleClickZoom: true,
       disableScrollWheelZoom: true,
+      draggable: false, 
+      scrollwheel: false,
       styles:[
     {
         "featureType": "water",
