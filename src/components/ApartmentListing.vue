@@ -16,19 +16,28 @@
 
     <!-- Property Details -->
      <div class="container flex justify-center py-3 px-4">
-      <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-3xl p-2 md:p-12 mb-12 text-white shadow-2xl mb-5 w-full">
+      <section class="bg-gradient-to-r from-orange-400 to-amber-400 rounded-3xl p-2 md:p-12 mb-12 text-white shadow-2xl mb-5 w-full">
       <div class="py-2 flex flex-col items-center mt-5 text-white">
         <div class="text-white font-medium md:text-xl">Te koop</div>
         <h1 class="text-lg md:text-4xl font-bold md:mb-4 text-center">{{ property.title }}</h1>
         <div class="price-tag md:text-3xl font-semibold text-amber-200 mb-2 md:mb-3">
           €{{ property.price.toLocaleString('nl-BE') }}
-    
         </div>
         <div class="text-gray-700 mb-2 md:mb-6 flex gap-2 items-center">
           <p class="md:text-2xl text-orange-100 leading-relaxed text-center mb-5">{{ property.location }}</p>
         </div>
       </div>
     </section>
+     </div>
+
+     <div class="container flex justify-center py-3 px-4 text-center">
+      <div class="bg-white rounded-3xl p-5 shadow-lg w-[120vh] flex items-center gap-8 p-5">
+        <p class="text-gray-700">{{ property.koppel.description }}</p>
+        <div class="w-[100px] h-[150px] rounded-2xl rotate-12 overflow-hidden shrink-0 flex items-center justify-center">
+          <img :src="property.koppel.image" :alt="property.koppel.title" 
+            class="w-full h-full object-cover">
+        </div>
+      </div>
      </div>
  
 
@@ -107,22 +116,23 @@
       </div>
     </div>
 
-    <section class="py-10 container px-4 flex justify-center">
-      <div class="bg-white rounded-lg shadow-lg flex items-center shadow-lg hover:shadow-xl transition-all 
-        duration-300 transform hover:-translate-y-1 flex flex-col justify-center items-center overflow-hidden">
-        <div class="flex flex-col items-center p-5">
-          <h2 class="md:text-xl font-semibold text-gray-600">Last but not least</h2>
-          <p class="font-medium text-gray-600 text-center">Onze ondergrondse parking is ook te koop.</p>
+    <section class="py-8 flex justify-center items-center container">  
+      <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
+        <div class="timeline-content flex flex-col md:flex-row items-center gap-8">
+          <div class="w-full md:w-1/2 p-5 flex justify-center items-center">
+            <img :src="property.parking.image" :alt="property.parking.title" class="object-cover rounded-lg size-[300px]">
+          </div>
+          <div class="w-full md:w-1/2 rounded-lg p-5 shadow-lg bg-white">
+              <h3 class="text-lg font-semibold text-amber-400">{{ property.parking.title }}</h3>
+            <p class="flex items-center space-x-3 rounded-xl font-medium text-stone-800">{{ property.parking.description }}</p>
+          </div>
         </div>
-
-        <img :src="parking1" alt="Parking" 
-        class="w-full h-[250px] md:h-[30vh] object-cover cursor-pointer" @click="openModal(parking1, 'Parking')" />
       </div>
     </section>
 
 
     <!-- Schedule Viewing -->
-    <section class="bg-gradient-to-r from-orange-600 to-amber-600 rounded-t-3xl p-2 md:p-12 mb-12 text-white shadow-2xl container mt-4 p-5">
+    <section class="bg-gradient-to-r from-amber-400 to-orange-400 rounded-t-3xl p-2 md:p-12 mb-12 text-white shadow-2xl container mt-4 p-5">
       <div class="mx-auto px-4 text-center p-5 text-white">
         <h2 class="text-3xl font-bold mb-3 text-white">Plan een bezoek in</h2>
         <p class="text-white font-medium">Bezoekdagen zijn gepland op 14 juni.</p>
@@ -201,15 +211,17 @@ const property = ref({
   calendlyUrl: 'https://calendly.com/gistelinckpieter/bezoek-appartement',
   available_from: '14 juli 2025',
   parking: {
-    title: 'Parking',
-    description: 'Parking ook te koop.',
-    image: '/images/surroundings/1.jpg',
+    title: 'Last but not least',
+    description: 'Onze ondergrondse parking is ook te koop.',
+    image: parking1,
+  },
+  koppel: {
+    title: 'Koppel',
+    description: 'Hallo, wij zijn Eveline en Pieter, en wij verkopen ons appartement. Met een baby op komst is het tijd om te verhuizen naar iets ruimer. We hebben hier als koppel veel plezier gehad en mooie herinneringen opgebouwd. We hopen dat de volgende bewoners er net zo graag zullen wonen als wij.',
+    image: koppel,
+    class: 'w-[500px] h-[500px]'
   },
   story: [
-    {
-      description: 'Hallo, wij zijn Eveline en Pieter, en wij verkopen ons appartement. Met een baby op komst is het tijd om te verhuizen naar iets ruimer. We hebben hier als koppel veel plezier gehad en mooie herinneringen opgebouwd. We hopen dat de volgende bewoners er net zo graag zullen wonen als wij.',
-      class: 'w-[350px] h-[500px]'
-    },
     {
       description: 'Prachtig gelegen en dicht bij de natuur, je gelooft soms niets dat je in Gent woont. Het parkje achter het appartement is een perfecte plek om te genieten van de zon. Het ligt ook ingesloten en niet langs een strat. Je waant jezelf in een oase van rust, in Gent.',
       image: living2,
@@ -274,26 +286,26 @@ const property = ref({
     },
     {
       icon: 'fas fa-ruler-combined',
-      text: '1 bergruimte',
+      text: '1 kelderbergruimte',
     },
     {
       icon: 'fas fa-ruler-combined',
-      text: '59 m²',
+      text: '59 m² bewoonbare ruimte',
     },
     {
       icon: 'fas fa-ruler-combined',
-      text: '322 kWh/m²',
+      text: '322 kWh/m² (EPC D)',
     },
     {
       icon: 'fas fa-calendar-alt',
       text: 'Beschikbaar vanaf akte'
     },
     {
-      icon: 'fas fa-calendar-alt',
+      icon: 'fas fa-ruler-combined',
       text: 'Bergruimte (wasmachine en droogkast)'
     },
     {
-      icon: 'fas fa-parking',
+      icon: 'fas fa-solar-panel',
       text: 'Zonnepanelen op dak'
     }
   ]
