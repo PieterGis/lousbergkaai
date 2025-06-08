@@ -193,6 +193,9 @@ import buurtwinkel from '@/assets/buurtwinkel.jpeg'
 import gentbrugsemeersen from '@/assets/gentbrugsemeersen.png'
 import parking1 from '@/assets/parking1.webp'
 import koppel from '@/assets/koppel.jpeg'
+import plan1 from '@/assets/plan1.jpeg'
+import kaai from '@/assets/kaai.jpg'
+import keuken4 from '@/assets/keuken4.jpg'
 
 const images_header = ref([
   living1,
@@ -214,6 +217,10 @@ const images_other = ref([
   badkamer1,
   keuken3,
   buiten4,
+  slaapkamer1,
+  keuken4,
+  kaai,
+  plan1,
 ])
 
 const property = ref({
