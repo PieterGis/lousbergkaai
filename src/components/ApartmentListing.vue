@@ -157,7 +157,9 @@
         <h2 class="text-3xl font-bold mb-3 text-white">Plan een bezoek in</h2>
         <p class="text-white font-medium">De bezoekersdag gaat door op zaterdag 14 juni.</p>
         <span class="text-white font-medium">Contacteer ons via <a href="mailto:gistelinckpieter@gmail.com" class="text-white">gistelinckpieter@gmail.com</a> of 
-        <a href="tel:+32 498 40 91 17" class="text-white">+32 498 40 91 17</a></span>
+        <a href="tel:+32 487638688" class="text-white">0487638688</a></span>
+        <span class="text-white font-medium"> (bellen tussen 9:00 en 18:00)</span>
+
 
         <div class="py-8 text-center text-white" >  
           Made with ❤️ by Eveline & Pieter
@@ -230,7 +232,7 @@ const property = ref({
   bathrooms: 1,
   bergruimte: 1,
   area: 59,
-  location: 'Ferdinand Lousbergkaai 101 bus 003, 9000 Gent',
+  location: 'Ferdinand Lousbergskaai 101 bus 003, 9000 Gent',
   description: 'Met veel plezier hebben wij hier als koppel gewoond. Een warm, licht en gezellig appartement waar we mooie herinneringen hebben opgebouwd. Nu er een baby op komst is, verhuizen we naar iets ruimer, en nemen we met pijn in het hart afscheid van deze plek. We hopen dat de volgende bewoners er net zo graag zullen wonen als wij. Kom gerust eens kijken. Misschien wordt dit ook jouw nieuwe thuis.',
   videoUrl: 'https://www.youtube.com/embed/lx3RndgFIG8',
   epc: 289,
@@ -239,7 +241,7 @@ const property = ref({
   available_from: '14 juli 2025',
   parking: {
     title: 'Last but not least',
-    description: 'Onze ondergrondse parkeerplaats is ook te koop.',
+    description: 'Onze ondergrondse parkeerplaats is ook te koop. Vanafprijs: EUR 26.000 ',
     image: parking1,
   },
   koppel: {
@@ -268,7 +270,7 @@ const property = ref({
   surroundings: [
     {
       title: 'Lousbergspark',
-      description: 'Via het terras kom je rechtstreeks in het Lousbergpark (1,14 hectare). Dit gezellige parkje ligt verscholen tussen de Ferdinand Lousbergkaai, Karperstraat, Tarbotstraat en Forelstraat. Je vindt er een speeltuin, een grote picknicktafel, een petanquebaan en een buurtcentrum met gemeenschapstuin. <a href="https://visit.gent.be/nl/zien-doen/ferdinand-lousbergpark" target="_blank">Meer info</a>',
+      description: 'Via het terras kom je rechtstreeks in het Lousbergpark (1,14 hectare). Dit gezellige parkje ligt verscholen tussen de Ferdinand Lousbergskaai, Karperstraat, Tarbotstraat en Forelstraat. Je vindt er een speeltuin, een grote picknicktafel, een petanquebaan en een buurtcentrum met gemeenschapstuin. <a href="https://visit.gent.be/nl/zien-doen/ferdinand-lousbergpark" target="_blank">Meer info</a>',
       image: buiten5,
     },
   {
